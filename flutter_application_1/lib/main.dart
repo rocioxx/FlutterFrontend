@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -55,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final TextEditingController _textController = TextEditingController();
 
   void _incrementCounter() {
     setState(() {
@@ -86,30 +87,52 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('You have pushed the button this many times:'),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 30),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Text(
+                  'Este es un contador interactivo. ¡Presiona el botón para incrementar!',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    hintText: 'Escribe algo aquí',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    prefixIcon: const Icon(Icons.edit),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _counter = 0;
+                  });
+                },
+                child: const Text('Reiniciar Contador'),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
