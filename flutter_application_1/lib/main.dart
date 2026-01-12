@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -65,7 +68,20 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      _fetchdata();
+
     });
+  }
+
+  Future<void> _fetchdata() async {
+    const url = "https://randomuser.me/api?results=5";
+    final uri = Uri.parse(url);
+    final response = await http.get(uri);
+    final body = response.body;
+    final json = jsonDecode(body);
+    final results = json['results'] ;
+
+    print (results);
   }
 
   @override
@@ -86,7 +102,23 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
+      body: 
+      ListView.builder
+      (itemBuilder: (context, index)
+      {
+        const texto = "hola";
+        if(!results.isEmpty){
+          
+        }
+        return ListTile(
+          title: Text(texto),
+          titleColor: Colors.blue,
+        );
+      }
+      
+      )
+
+      /*Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-      ),
+      )*/,
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
