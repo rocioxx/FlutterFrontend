@@ -122,15 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _counter = 0;
-                  });
-                },
-                child: const Text('Reiniciar Contador'),
-              ),
             ],
           ),
         ),
